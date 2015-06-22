@@ -291,7 +291,8 @@ int iTests(ISBNPrefix& list, int& testNumber, int* totalPassed, int* totalTested
         testPassed("ISBN(9070002043) and toStrWithStyle(char*)",
          ++testNumber, totalPassed, totalTested);
 
-    isbn = ISBN("9995500000", list);
+
+	isbn = ISBN("9995500000", list);
     isbn.toStrWithStyle(stra);
     if(strcmp(stra, "9995500000")) {
         testFailed("toStrWithStyle did not return 9995500000",

@@ -6,16 +6,16 @@ ISBN.cpp*/
 #include <cstdio>
 #include <cstring>
 #include <stdio.h>
+#include <fstream>
+
 using namespace std;
 #include"ISBNPrefix.h"
-#define _CRT_SECURE_NO_DEPRECATE
-#define _CRT_NONSTDC_NO_DEPRECATE 
 
 ISBNPrefix::ISBNPrefix(){
 	fp=NULL;
 }
-ISBNPrefix::ISBNPrefix(const char* prefixRanges[]){
-	if(prefixRanges !=NULL){
+ISBNPrefix::ISBNPrefix(const char* filename){
+	if(filename !=NULL){
 	fp = fopen ("prefixRanges.txt","r");
 	}
 	else{
@@ -36,30 +36,28 @@ bool ISBNPrefix::isRegistered(int area) const{
     return false;
 }
 int ISBNPrefix::minNoDigits(int area) const{
-	int a, minno=0;
-    char ps[10],pl[10];
-    if(fp!=NULL){
+	int minno = 0, a;
+        char pmin[8], pmax[8];
+        int i = 0;
+ 
+        if (area < 0)
+                return 0;
+ 
         rewind(fp);
-		while(!feof(fp) && minno==0){
-            fscanf(fp,"%d%s%s",&a,&ps,&pl);
-            if(a==area){
-                minno=2;
-			}
-			else if(area>a){
-				minno=1;
-			}
-			else if(area<a){
-				minno=0;
-			}
-		}
-	}
-
-return minno;
+        while (!feof(fp))
+        {
+                fscanf(fp, "%d %s %s", &a, &pmin, &pmax);
+                if (area == a)
+                {
+                        minno = strlen(pmin);
+                        break;
+                }
+        }
+        return minno;
 }
 bool ISBNPrefix::isRegistered(int area, const char* publisher) const{
 	int a,minck=0;
     char pu[10],pl[10];
-    int is,il,ii;
     if(fp !=NULL){
 		rewind(fp);		
 		do{

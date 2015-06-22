@@ -6,7 +6,7 @@ class ISBNPrefix{
 FILE *fp;
 public:
 ISBNPrefix();
-ISBNPrefix(const char* prefixRanges[]);
+ISBNPrefix(const char* filename);
 bool isRegistered(int area) const;
 int minNoDigits(int area) const;
 bool isRegistered(int area, const char* publisher) const;
